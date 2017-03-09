@@ -99,8 +99,10 @@ the customer email and order after createOrder and deliverOrder methods are call
 
     };
 
-    //MODIFY THIS FUNCTION TO ITERATE THROUGH EACH ARRAY VALUE SO
-    //YOU CAN TEST EACH ONE
+    //I tried passing each value of the customerIdArray and
+    // this.db.get(id) to a function to return the value and test it
+    // but it kept returned Undefined.
+    // I just returned the array by using Object.values(this.db.getAll())
     Truck.prototype.printOrders = function() {
 
         var customerIdArray = Object.keys(this.db.getAll());
