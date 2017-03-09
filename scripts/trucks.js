@@ -27,22 +27,37 @@
 		this.db.remove(customerId);
 	};
 
+	//Rather than using this.db.get(id) to get the orders,
+	//I am passing the indexed array at each iteration of the 
+	//forEach loop and pass it to the showOrder() function
+	//which is already tested as working properly
 	Truck.prototype.printOrders = function() {
 		var customerIdArray = Object.keys(this.db.getAll());
 
 		console.log('Truck #' + this.truckId + ' has pending orders:');
-		customerIdArray.forEach(function(id){
-			console.log(this.db.get(id));
+		customerIdArray.forEach(function(id, index, arr){
+			//console.log(this.db.get(id));
+			//console.log('showOrder');
+			this.showOrder(arr[index]);
 		}.bind(this));
+
+		var newArr = Object.values(this.db.getAll());
+		return newArr;
 	};
 
 	//ADDED FUNCTIONS
-		Truck.prototype.OrderInfo = function(info2){
-		return this;
+	Truck.prototype.OrderInfo = function(){
+		var arr  = Object.values(this.db.getAll());
+		console.log(arr);
 	};
 	
-	Truck.prototype.showOrder = function(customerId){
-		return this.db.get(customerId);
+	Truck.prototype.showOrder = function(cId){
+		 var item = Object(this.db.get(cId));
+		 console.log(item);
+	};
+
+	Truck.prototype.getId = function(){
+		console.log(this.truckId);
 	};
 
 	App.Truck = Truck;

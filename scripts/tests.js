@@ -96,21 +96,15 @@ the customer email and order after createOrder and deliverOrder methods are call
 	//MODIFY THIS FUNCTION TO ITERATE THROUGH EACH ARRAY VALUE SO
 	//YOU CAN TEST EACH ONE
 	Truck.prototype.printOrders = function() {
+
 		var customerIdArray = Object.keys(this.db.getAll());
 
 		console.log('Truck #' + this.truckId + ' has pending orders:');
 		customerIdArray.forEach(function(id){
 			console.log(this.db.get(id));
 		}.bind(this));
-	};
 
-	//ADDED FUNCTIONS
-	Truck.prototype.OrderInfo = function(info2){
-		return this;
-	};
-
-	Truck.prototype.showOrder = function(info1){
-		return this.db.get(info1);
+		return Object.values(this.db.getAll());
 	};
 
 	App.Truck = Truck;
@@ -134,25 +128,29 @@ the customer email and order after createOrder and deliverOrder methods are call
 /* ===================== TRUCK TESTS ===================== */
 QUnit.test( "Trucktest", function( assert ) {
 
-myTruck.createOrder({email:"me@goldfinger.com", coffee: "double mocha"});
-assert.deepEqual(myTruck.showOrder("me@goldfinger.com"), {emailAddress: "me@goldfinger.com", coffee: "double mocha"}, "Passed!");
 
-myTruck.createOrder({email:'dr@no.com', coffee: 'decaf'});
-assert.deepEqual(myTruck.showOrder('me@goldfinger.com'), {emailAddress: 'dr@no.com', coffee: 'decaf'}, "Passed!");
+var expValues = [
+  {"coffee": "double mocha",
+    "emailAddress": "me@goldfinger.com"}
+  ,
+  
+    {"coffee": "decaf",
+    "emailAddress": "dr@no.com"}
+  ,
+  
+    {"coffee": "earl grey",
+    "emailAddress": "m@bond.com"}
+  
+];
 
-myTruck.createOrder({email:'m@bond.com', coffee: 'earl grey'});
-assert.deepEqual(myTruck.showOrder('me@goldfinger.com'), {emailAddress: 'm@bond.com', coffee: 'earl grey'}, "Passed!");
 
-myTruck.printOrders();
+myTruck.createOrder({emailAddress:'me@goldfinger.com', coffee: 'double mocha'});
+myTruck.createOrder({emailAddress:'dr@no.com', coffee: 'decaf'});
+myTruck.createOrder({emailAddress:'m@bond.com', coffee: 'earl grey'});
 
-myTruck.deliverOrder('dr@no.com')
-assert.ok(myTruck.showOrder('dr@no.com') == undefined, "Passed!");
+var printedOrders = myTruck.printOrders();
 
-myTruck.deliverOrder('m@bond.com')
-assert.ok(myTruck.showOrder('m@bond.com') == undefined, "Passed!");
-
-myTruck.printOrders();
-
+assert.deepEqual(printedOrders, expValues, "Passed!");
 
  
 });
