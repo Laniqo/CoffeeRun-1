@@ -45,20 +45,7 @@
 		return newArr;
 	};
 
-	//ADDED FUNCTIONS
-	Truck.prototype.OrderInfo = function(){
-		var arr  = Object.values(this.db.getAll());
-		console.log(arr);
-	};
 	
-	Truck.prototype.showOrder = function(cId){
-		 var item = Object(this.db.get(cId));
-		 console.log(item);
-	};
-
-	Truck.prototype.getId = function(){
-		console.log(this.truckId);
-	};
 
 	App.Truck = Truck;
 	window.App = App;

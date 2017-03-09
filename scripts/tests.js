@@ -60,12 +60,14 @@ QUnit.test( "DataStore test", function( assert ) {
 
 
 
+
 QUnit.module("Truck Test");
 
 /* ===================== TRUCK CODE ===================== */
 /* Unable to test code due to the functions not returning any values and no method to confirm if 
 values are added correctly, other than the console logs. Needed to add ShowOrder method to show
 the customer email and order after createOrder and deliverOrder methods are called to confirm correct storage and deletion of values. */
+
 (function(window){
 	'use strict';
 	var App = window.App || {};
@@ -112,7 +114,9 @@ the customer email and order after createOrder and deliverOrder methods are call
 
 })(window);
 
-/* ===================== MAIN CODE ===================== */
+
+//To recieve the window object for use inside the function body and retrieves
+//the constructors you defines as part of the window.App namespace
 (function(window){
 	'use strict';
 	var App = window.App;
@@ -121,6 +125,7 @@ the customer email and order after createOrder and deliverOrder methods are call
 
 	var myTruck = new Truck('ncc-1701', new DataStore());
 	window.myTruck = myTruck;
+
 
 })(window);
 
